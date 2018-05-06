@@ -1,3 +1,11 @@
+/* Fast Symbolic 3D Registration Solution
+ * Proposed by Jin Wu, Ming Liu, Zebo Zhou and Rui Li
+ * e-mail: jin_wu_uestc@hotmail.com
+ * Copyright: Jin Wu 2018
+ */
+
+
+
 #include "eig3D.h"
 #include <complex>
 #include <stdint.h>
@@ -149,9 +157,9 @@ void eig3D_symbolic(const vector<Vector3d>* P,
 
     Quaterniond qRes = Quaterniond(
 		       G14 * G23 * G23 - G13 * G23 * G24 - G14 * G22 * G33 + G12 * G24 * G33 + G13 * G22 * G34 - G12 * G23 * G34,
-			   G13 * G13 * G24 + G12 * G14 * G33 - G11 * G24 * G33 + G11 * G23 * G34 - G13 * G14 * G23 - G13 * G12 * G34,
-	           G13 * G14 * G22 - G12 * G14 * G23 - G12 * G13 * G24 + G11 * G23 * G24 + G12 * G12 * G34 - G11 * G22 * G34, 
-	           - (G13 * G13 * G22 - 2 * G12 * G13 * G23 + G11 * G23 * G23 + G12 * G12 * G33 - G11 * G22 * G33));
+                       G13 * G13 * G24 + G12 * G14 * G33 - G11 * G24 * G33 + G11 * G23 * G34 - G13 * G14 * G23 - G13 * G12 * G34,
+	               G13 * G14 * G22 - G12 * G14 * G23 - G12 * G13 * G24 + G11 * G23 * G24 + G12 * G12 * G34 - G11 * G22 * G34, 
+	               - (G13 * G13 * G22 - 2 * G12 * G13 * G23 + G11 * G23 * G23 + G12 * G12 * G33 - G11 * G22 * G33));
     qRes.normalize();
 
     *rRes = qRes.toRotationMatrix();
