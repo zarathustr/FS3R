@@ -141,14 +141,17 @@ void eig3D_symbolic(const vector<Vector3d>* P,
     QQ(3, 1) = tmp(2, 0); QQ(3, 2) = tmp(2, 1); QQ(3, 3) = tmp(2, 2);
 
     double c = QQ.determinant();
-    double b = - 8.0 * (sigma_->transpose()).determinant();
-    double a = - 2.0 * ((*sigma_) * (sigma_->transpose())).trace();
+    double b = - 8.0 * sigma_->determinant();
+    double a = - 2.0 * ((*sigma_)(0, 0) * (*sigma_)(0, 0) + (*sigma_)(0, 1) * (*sigma_)(0, 1) + (*sigma_)(0, 2) * (*sigma_)(0, 2) + 
+                        (*sigma_)(1, 0) * (*sigma_)(1, 0) + (*sigma_)(1, 1) * (*sigma_)(1, 1) + (*sigma_)(1, 2) * (*sigma_)(1, 2) + 
+                        (*sigma_)(2, 0) * (*sigma_)(2, 0) + (*sigma_)(2, 1) * (*sigma_)(2, 1) + (*sigma_)(2, 2) * (*sigma_)(2, 2));
 
-    std::complex<double> T0(2.0 * a * a * a + 27.0 * b * b - 72.0 * a * c);
-    std::complex<double> T1(pow((T0 + sqrt(- 4.0 * (a * a + 12.0 * c) * (a * a + 12.0 * c) * (a * a + 12.0 * c) + T0 * T0)), 1.0 / 3.0));
-    std::complex<double> T2(sqrt(- 4.0 * a + 2.519842099789746 * (a * a + 12.0 * c) / T1 + 1.587401051968199 * T1));
-
-    double lambda = (0.20412414523193150818310700622549 * (T2 + sqrt(-T2 * T2 - 12 * a - 12 * 2.4494897427831780981972840747059 * b / T2))).real();
+    double T0 = 2.0 * a * a * a + 27.0 * b * b - 72.0 * a * c;
+    double tt = a * a + 12.0 * c;
+    double theta = atan2(sqrt(4.0 * tt * tt * tt - T0 * T0), T0);
+    double aT1 = 1.259921049894873 * sqrt(tt) * cos(theta * 0.333333333333333333);
+    double T2 = sqrt( - 4.0 * a + 3.174802103936399 * aT1);
+    double lambda = 0.204124145231932 * (T2 + sqrt( - T2 * T2 - 12.0 * a - 29.393876913398135 * b / T2));
 	
     double G11 = QQ(0, 0) - lambda, G12 = QQ(0, 1), G13 = QQ(0, 2), G14 = QQ(0, 3);		
     double G22 = QQ(1, 1) - lambda, G23 = QQ(1, 2), G24 = QQ(1, 3);
