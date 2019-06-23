@@ -1,4 +1,4 @@
-# Fast-Symbolic-3D-Registration
+# Fast Symbolic 3D Registration
 A Fast Symbolic 3D Registration Solution Proposed by Jin Wu, Ming Liu, Zebo Zhou and Rui Li.
 
 # Citation
